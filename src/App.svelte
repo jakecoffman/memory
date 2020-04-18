@@ -4,6 +4,10 @@
 	import Cat from "./icons/Cat.svelte";
 	import Fish from "./icons/Fish.svelte";
 	import Bird from "./icons/Bird.svelte";
+	import Lion from "./icons/Lion.svelte";
+	import Snake from "./icons/Snake.svelte";
+	import Chicken from "./icons/Chicken.svelte";
+	import Monkey from "./icons/Monkey.svelte";
 
 	/* Randomize array in-place using Durstenfeld shuffle algorithm */
 	function shuffleArray(array) {
@@ -23,13 +27,21 @@
 	function reset() {
 		board = [
 			{image: Dog, id: idx++},
-			{image: Cat, id: idx++},
-			{image: Fish, id: idx++},
-			{image: Bird, id: idx++},
 			{image: Dog, id: idx++},
 			{image: Cat, id: idx++},
+			{image: Cat, id: idx++},
+			{image: Fish, id: idx++},
 			{image: Fish, id: idx++},
 			{image: Bird, id: idx++},
+			{image: Bird, id: idx++},
+			{image: Lion, id: idx++},
+			{image: Lion, id: idx++},
+			{image: Snake, id: idx++},
+			{image: Snake, id: idx++},
+			{image: Monkey, id: idx++},
+			{image: Monkey, id: idx++},
+			{image: Chicken, id: idx++},
+			{image: Chicken, id: idx++},
 		]
 		shuffleArray(board)
 		selected = []
@@ -71,35 +83,39 @@
 		selected = []
 		board = board
 	}
+
+	const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 </script>
 
 <main>
-	{#each board as card}
+	{#each board as card, index}
 	<a on:click={() => pick(card)}>
 		<Card isFlipped={card.flipped}>
+			{#if card.flipped}
 			<svelte:component this={card.image}/>
+			{:else}
+			{letters[index]}
+			{/if}
 		</Card>
 	</a>
 	{/each}
 </main>
 
+<footer>
+	Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+</footer>
+
 <style>
 	main {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		padding: 1em;
-
 		display: grid;
 		grid-gap: 1rem;
-		grid-template-columns: repeat(4, 20vw);
-		grid-template-rows: repeat(2, 20vw);
+		height: 100%;
+		grid-template-rows: repeat(auto-fill, 23vmin);
+		grid-template-columns: repeat(auto-fill, 23vmin);
 	}
 
-	a {
-		padding: 1rem;
+	footer {
+		margin-top: -1rem;
 	}
 
 	h1 {
