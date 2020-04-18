@@ -134,11 +134,18 @@
 
 <style>
 	main {
-		display: grid;
-		grid-gap: 1rem;
 		height: 100%;
-		grid-template-rows: repeat(auto-fill, 23vmin);
-		grid-template-columns: repeat(auto-fill, 23vmin);
+		display: flex;
+		flex-wrap: wrap;
+		align-content: center;
+		justify-content: center;
+	}
+
+	a {
+		width: 23vmin;
+		height: 23vmin;
+		margin-right: 1rem;
+		margin-bottom: 1rem;
 	}
 
 	aside {
