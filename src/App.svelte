@@ -1,127 +1,44 @@
 <script>
-	import Dog from "./icons/Dog.svelte";
-	import Card from "./Card.svelte";
-	import Cat from "./icons/Cat.svelte";
-	import Fish from "./icons/Fish.svelte";
-	import Bird from "./icons/Bird.svelte";
-	import Lion from "./icons/Lion.svelte";
-	import Snake from "./icons/Snake.svelte";
-	import Chicken from "./icons/Chicken.svelte";
-	import Monkey from "./icons/Monkey.svelte";
+    import Game from "./Game.svelte";
 
-	/* Randomize array in-place using Durstenfeld shuffle algorithm */
-	function shuffleArray(array) {
-		for (let i = array.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			const temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-		}
-	}
-
-	let waiting = false
-	let idx = 0
-	let board = []
-	let selected = []
-
-	function reset() {
-		board = [
-			{image: Dog, id: idx++},
-			{image: Dog, id: idx++},
-			{image: Cat, id: idx++},
-			{image: Cat, id: idx++},
-			{image: Fish, id: idx++},
-			{image: Fish, id: idx++},
-			{image: Bird, id: idx++},
-			{image: Bird, id: idx++},
-			{image: Lion, id: idx++},
-			{image: Lion, id: idx++},
-			{image: Snake, id: idx++},
-			{image: Snake, id: idx++},
-			{image: Monkey, id: idx++},
-			{image: Monkey, id: idx++},
-			{image: Chicken, id: idx++},
-			{image: Chicken, id: idx++},
-		]
-		shuffleArray(board)
-		selected = []
-		waiting = false
-	}
-	reset()
-
-	function pick(card) {
-		if (!board.find(c => !c.flipped)) {
-			return reset()
-		}
-		if (waiting) {
-			return next()
-		}
-		if (card.flipped) {
-			return
-		}
-		if (!board.find(c => !c.flipped)) {
-			return
-		}
-
-		card.flipped = true
-		selected = [...selected, card]
-
-		if (selected.length === 2) {
-			if (selected[0].image === selected[1].image) {
-				selected = []
-			} else {
-				waiting = true
-			}
-		}
-
-		board = board
-	}
-
-	function next() {
-		waiting = false
-		selected.forEach(c => c.flipped = false)
-		selected = []
-		board = board
-	}
-
-	const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    let playing = false;
+    let numPlayers
 </script>
 
-<main>
-	{#each board as card, index}
-	<a on:click={() => pick(card)}>
-		<Card isFlipped={card.flipped}>
-			{#if card.flipped}
-			<svelte:component this={card.image}/>
-			{:else}
-			{letters[index]}
-			{/if}
-		</Card>
-	</a>
-	{/each}
-</main>
+{#if !playing}
+    <h1>Memory</h1>
 
-<footer>
-	Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-</footer>
+    <h2>Choose players</h2>
+
+    <div>
+        <button on:click={() => numPlayers = 1} class:selected={numPlayers === 1}>1</button>
+        <button on:click={() => numPlayers = 2} class:selected={numPlayers === 2}>2</button>
+        <button on:click={() => numPlayers = 3} class:selected={numPlayers === 3}>3</button>
+        <button on:click={() => numPlayers = 4} class:selected={numPlayers === 4}>4</button>
+    </div>
+
+    <button on:click={() => playing = true}>PLAY</button>
+{:else}
+    <Game {numPlayers}/>
+{/if}
 
 <style>
-	main {
-		display: grid;
-		grid-gap: 1rem;
-		height: 100%;
-		grid-template-rows: repeat(auto-fill, 23vmin);
-		grid-template-columns: repeat(auto-fill, 23vmin);
-	}
+    h1 {
+        font-size: 4rem;
+    }
 
-	footer {
-		margin-top: -1rem;
-	}
+    h2 {
+        font-size: 2rem;
+    }
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
+    .selected {
+        background: #adadff;
+    }
+
+    button {
+        border-radius: 4px;
+        margin: 1rem 2rem;
+        padding: 1rem 2rem;
+        font-size: 4rem;
+    }
 </style>
