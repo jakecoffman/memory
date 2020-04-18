@@ -8,6 +8,7 @@
 	import Snake from "./icons/Snake.svelte";
 	import Chicken from "./icons/Chicken.svelte";
 	import Monkey from "./icons/Monkey.svelte";
+	import {onDestroy, onMount} from "svelte";
 
 	/* Randomize array in-place using Durstenfeld shuffle algorithm */
 	function shuffleArray(array) {
@@ -97,6 +98,18 @@
 	}
 
 	const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
+	let listener
+	onMount(() => {
+		listener = window.addEventListener('keypress', e => {
+			const i = letters.findIndex(l => l === e.key.toUpperCase())
+			pick(board[i])
+		})
+	})
+
+	onDestroy(() => {
+		window.removeEventListener('keypress', listener)
+	})
 </script>
 
 <main>
