@@ -24,7 +24,7 @@
         background-color: lightblue;
         color: #636363;
         line-height: 21vmin;
-        font-size: 92pt;
+        font-size: 21vmin;
         text-align: center;
         vertical-align: center;
     }
