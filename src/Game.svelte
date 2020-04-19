@@ -8,6 +8,7 @@
 	import Snake from "./icons/Snake.svelte";
 	import Chicken from "./icons/Chicken.svelte";
 	import Monkey from "./icons/Monkey.svelte";
+	import Mouse from "./icons/Mouse.svelte";
 	import {onDestroy, onMount} from "svelte";
 
 	/* Randomize array in-place using Durstenfeld shuffle algorithm */
@@ -50,6 +51,8 @@
 			{image: Monkey, id: idx++},
 			{image: Chicken, id: idx++},
 			{image: Chicken, id: idx++},
+			{image: Mouse, id: idx++},
+			{image: Mouse, id: idx++},
 		]
 		shuffleArray(board)
 		selected = []
