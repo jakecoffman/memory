@@ -117,7 +117,7 @@
 
 <main>
 	{#each board as card, index}
-	<a on:mousedown={() => pick(card)} on:touchstart={() => pick(card)}>
+	<a on:mousedown|preventDefault={() => pick(card)} on:touchstart|preventDefault={() => pick(card)}>
 		<Card isFlipped={card.flipped}>
 			{#if card.flipped}
 			<svelte:component this={card.image}/>
