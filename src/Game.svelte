@@ -117,7 +117,7 @@
 
 <main>
 	{#each board as card, index}
-	<a on:click={() => pick(card)} on:touchstart={() => pick(card)}>
+	<a on:mousedown={() => pick(card)} on:touchstart={() => pick(card)}>
 		<Card isFlipped={card.flipped}>
 			{#if card.flipped}
 			<svelte:component this={card.image}/>
@@ -159,6 +159,7 @@
 
 	footer {
 		margin-top: -1rem;
+		opacity: .8;
 	}
 
 	h1 {
