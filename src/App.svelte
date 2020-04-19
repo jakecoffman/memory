@@ -3,6 +3,9 @@
 
     let playing = false;
     let numPlayers
+
+    // warn before leaving
+    window.onbeforeunload = () => true;
 </script>
 
 {#if !playing}
