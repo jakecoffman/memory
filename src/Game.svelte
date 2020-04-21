@@ -10,6 +10,7 @@
 	import Monkey from "./icons/Monkey.svelte";
 	import Mouse from "./icons/Mouse.svelte";
 	import {onDestroy, onMount} from "svelte";
+	import Modal from "./Modal.svelte";
 
 	/* Randomize array in-place using Durstenfeld shuffle algorithm */
 	function shuffleArray(array) {
@@ -25,7 +26,7 @@
 
 	let curPlayer = 0
 	let scores = []
-	for (let i=0; i<numPlayers; i++) {
+	for (let i = 0; i < numPlayers; i++) {
 		scores.push(0)
 	}
 	let waiting = false
@@ -58,6 +59,7 @@
 		selected = []
 		waiting = false
 	}
+
 	reset()
 
 	function pick(card) {
@@ -113,6 +115,8 @@
 	onDestroy(() => {
 		window.removeEventListener('keypress', listener)
 	})
+
+	$: gameOver = board.filter(card => !card.flipped).length === 0
 </script>
 
 <main>
@@ -130,6 +134,20 @@
 </main>
 
 <aside>Player {curPlayer+1} - Score: {scores[curPlayer]}</aside>
+
+{#if gameOver}
+	<Modal on:close="{() => reset()}" class="modal">
+		<h2 slot="header">
+			Game Over
+		</h2>
+
+		<ul>
+		{#each scores as score, index}
+			<li>Player {index+1} - {score}</li>
+		{/each}
+		</ul>
+	</Modal>
+{/if}
 
 <footer>
 	Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
@@ -160,6 +178,7 @@
 	footer {
 		margin-top: -1rem;
 		opacity: .8;
+		font-size: .75rem;
 	}
 
 	h1 {
@@ -168,4 +187,19 @@
 		font-size: 4em;
 		font-weight: 100;
 	}
+
+	h2 {
+		margin: 0;
+		font-size: 2em;
+		color: #3e3e3e;
+		text-align: center;
+		border-bottom: 1px solid #c6c5c5;
+		padding-bottom: 1rem;
+	}
+
+	ul {
+		list-style: none;
+		font-size: 2em;
+	}
+
 </style>

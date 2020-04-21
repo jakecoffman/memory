@@ -20,7 +20,9 @@
         <button on:click={() => numPlayers = 4} class:selected={numPlayers === 4}>4</button>
     </div>
 
-    <button on:click={() => playing = true}>PLAY</button>
+    <span>
+        <button on:click={() => playing = true}>PLAY</button>
+    </span>
 {:else}
     <Game {numPlayers}/>
 {/if}
@@ -38,9 +40,20 @@
         background: #adadff;
     }
 
+    div {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 1rem;
+    }
+
+    span {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+
     button {
         border-radius: 4px;
-        margin: 1rem 2rem;
         padding: 1rem 2rem;
         font-size: 4rem;
     }
