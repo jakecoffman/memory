@@ -4,7 +4,6 @@
         height: 100%;
         width: 100%;
         perspective: 600px;
-        z-index: 3;
     }
 
     .card {
