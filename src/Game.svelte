@@ -33,8 +33,10 @@
 	let idx = 0
 	let board = []
 	let selected = []
+	let showScore = false
 
 	function reset() {
+		showScore = false
 		board = [
 			{image: Dog, id: idx++},
 			{image: Dog, id: idx++},
@@ -121,7 +123,7 @@
 
 <main>
 	{#each board as card, index}
-	<a on:mousedown|preventDefault={() => pick(card)} on:touchstart|preventDefault={() => pick(card)}>
+	<span on:mousedown|preventDefault={() => pick(card)} on:touchstart|preventDefault={() => pick(card)}>
 		<Card isFlipped={card.flipped}>
 			{#if card.flipped}
 			<svelte:component this={card.image}/>
@@ -129,16 +131,18 @@
 			{letters[index]}
 			{/if}
 		</Card>
-	</a>
+	</span>
 	{/each}
 </main>
 
-<aside>Player {curPlayer+1} - Score: {scores[curPlayer]}</aside>
+<aside on:click={() => showScore=true}>
+	Player {curPlayer+1} - Score: {scores[curPlayer]}
+</aside>
 
-{#if gameOver}
-	<Modal on:close="{() => reset()}" class="modal">
+{#if gameOver || showScore}
+	<Modal on:close="{() => gameOver ? reset() : showScore=false}">
 		<h2 slot="header">
-			Game Over
+			Scores
 		</h2>
 
 		<ul>
@@ -155,28 +159,34 @@
 
 <style>
 	main {
-		height: 100%;
 		display: flex;
 		flex-wrap: wrap;
-		align-content: center;
+		gap: 1rem;
 		justify-content: center;
+		margin-bottom: 2rem;
 	}
 
-	a {
+	span {
 		width: 23vmin;
 		height: 23vmin;
-		margin-right: 1rem;
-		margin-bottom: 1rem;
+		cursor: pointer;
 	}
 
 	aside {
 		position: fixed;
 		right: 10px;
 		bottom: 10px;
+		cursor: pointer;
+		background: #f1f1f1;
+		border-radius: 3px;
+		z-index: 5;
 	}
 
 	footer {
-		margin-top: -1rem;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
 		opacity: .8;
 		font-size: .75rem;
 	}

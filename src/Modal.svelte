@@ -14,7 +14,7 @@
   <slot name="header"></slot>
   <slot></slot>
   <div class="actions">
-    <button on:click={close}>shuffle and restart</button>
+    <button on:click={close}>ok</button>
   </div>
 </div>
 
