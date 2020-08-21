@@ -15,6 +15,6 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "start_url": "/memory",
+    "start_url": "https://www.jakecoffman.com/memory/",
     "display": "standalone"
 }
